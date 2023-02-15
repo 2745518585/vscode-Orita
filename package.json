@@ -1,8 +1,9 @@
 {
     "name": "orita",
-    "displayName": "orita",
+    "displayName": "Orita",
     "description": "Useful OI Tools",
     "version": "0.0.1",
+    "publisher": "2745518585",
     "engines": {
         "vscode": "^1.75.0"
     },
@@ -10,8 +11,8 @@
         "Other"
     ],
     "repository": {
-      "type": "git",
-      "url": "https://github.com/2745518585/Orita.git"
+        "type": "git",
+        "url": "https://github.com/2745518585/vscode-Orita.git"
     },
     "activationEvents": [
         "onCommand:orita.compile-run",
