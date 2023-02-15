@@ -16,6 +16,7 @@
     },
     "activationEvents": [
         "onCommand:orita.compile-run",
+        "onCommand:orita.compile",
         "onCommand:orita.run",
         "onCommand:orita.enter-address"
     ],
@@ -24,21 +25,29 @@
         "commands": [
             {
                 "command": "orita.compile-run",
-                "title": "Compile-run"
+                "title": "Orita: Compile-run"
+            },
+            {
+                "command": "orita.compile",
+                "title": "Orita: Compile"
             },
             {
                 "command": "orita.run",
-                "title": "Run"
+                "title": "Orita: Run"
             },
             {
                 "command": "orita.enter-address",
-                "title": "Enter-address"
+                "title": "Orita: Enter-address"
             }
         ],
         "keybindings": [
             {
                 "command": "orita.compile-run",
                 "key": "f6"
+            },
+            {
+                "command": "orita.compile",
+                "key": "ctrl+f6"
             },
             {
                 "command": "orita.run",

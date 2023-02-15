@@ -1,1 +1,138 @@
-(()=>{"use strict";var e={496:e=>{e.exports=require("vscode")}},t={};function n(i){var s=t[i];if(void 0!==s)return s.exports;var r=t[i]={exports:{}};return e[i](r,r.exports,n),r.exports}var i={};(()=>{var e=i;Object.defineProperty(e,"__esModule",{value:!0}),e.deactivate=e.activate=void 0;const t=n(496);e.activate=function(e){e.subscriptions.push(t.commands.registerCommand("orita.compile-run",(function(){const e=t.window.activeTextEditor;if(!e)return void t.window.showErrorMessage("Invalid File");const n=e.document.fileName;if(".cpp"!=n.substring(n.length-4,n.length))return void t.window.showErrorMessage("Invalid File");const i=n.substring(0,n.lastIndexOf("\\")),s=n.substring(n.lastIndexOf("\\")+1,n.length-4);let r=t.window.activeTerminal;r||(r=t.window.createTerminal("powershell")),r.show(),r.sendText('cd "'+i+'"'),r.sendText('compile /f "'+s+'.cpp"'),r.sendText('.\\"'+s+'.exe"')}))),e.subscriptions.push(t.commands.registerCommand("orita.run",(function(){const e=t.window.activeTextEditor;if(!e)return void t.window.showErrorMessage("Invalid File");const n=e.document.fileName;if(".cpp"!=n.substring(n.length-4,n.length))return void t.window.showErrorMessage("Invalid File");const i=n.substring(0,n.lastIndexOf("\\")),s=n.substring(n.lastIndexOf("\\")+1,n.length-4);let r=t.window.activeTerminal;r||(r=t.window.createTerminal("powershell")),r.show(),r.sendText('cd "'+i+'"'),r.sendText('run /f "'+s+'.cpp"')}))),e.subscriptions.push(t.commands.registerCommand("orita.enter-address",(function(){const e=t.window.activeTextEditor;if(!e)return void t.window.showErrorMessage("Invalid File");const n=e.document.fileName,i=n.substring(0,n.lastIndexOf("\\"));let s=t.window.activeTerminal;s||(s=t.window.createTerminal("powershell")),s.show(),s.sendText('cd "'+i+'"')})))},e.deactivate=function(){}})(),module.exports=i})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ([
+/* 0 */,
+/* 1 */
+/***/ ((module) => {
+
+module.exports = require("vscode");
+
+/***/ })
+/******/ 	]);
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.deactivate = exports.activate = void 0;
+const vscode = __webpack_require__(1);
+function activate(context) {
+    context.subscriptions.push(vscode.commands.registerCommand('orita.compile-run', function () {
+        const activeEditor = vscode.window.activeTextEditor;
+        if (!activeEditor) {
+            vscode.window.showErrorMessage('Invalid File');
+            return;
+        }
+        activeEditor.document.save();
+        const file = activeEditor.document.fileName;
+        if (file.substring(file.length - 4, file.length) != ".cpp") {
+            vscode.window.showErrorMessage('Invalid File');
+            return;
+        }
+        const file_address = file.substring(0, file.lastIndexOf('\\'));
+        const file_name = file.substring(file.lastIndexOf('\\') + 1, file.length - 4);
+        let Terminal = vscode.window.activeTerminal;
+        if (!Terminal) {
+            Terminal = vscode.window.createTerminal('powershell');
+        }
+        Terminal.show();
+        Terminal.sendText('cd \"' + file_address + '\"');
+        Terminal.sendText('compile /f \"' + file_name + '.cpp\"');
+        Terminal.sendText('.\\"' + file_name + '.exe\"');
+    }));
+    context.subscriptions.push(vscode.commands.registerCommand('orita.compile', function () {
+        const activeEditor = vscode.window.activeTextEditor;
+        if (!activeEditor) {
+            vscode.window.showErrorMessage('Invalid File');
+            return;
+        }
+        activeEditor.document.save();
+        const file = activeEditor.document.fileName;
+        if (file.substring(file.length - 4, file.length) != ".cpp") {
+            vscode.window.showErrorMessage('Invalid File');
+            return;
+        }
+        const file_address = file.substring(0, file.lastIndexOf('\\'));
+        const file_name = file.substring(file.lastIndexOf('\\') + 1, file.length - 4);
+        let Terminal = vscode.window.activeTerminal;
+        if (!Terminal) {
+            Terminal = vscode.window.createTerminal('powershell');
+        }
+        Terminal.sendText('cd \"' + file_address + '\"');
+        Terminal.sendText('compile /f \"' + file_name + '.cpp\"');
+    }));
+    context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
+        const activeEditor = vscode.window.activeTextEditor;
+        if (!activeEditor) {
+            vscode.window.showErrorMessage('Invalid File');
+            return;
+        }
+        activeEditor.document.save();
+        const file = activeEditor.document.fileName;
+        if (file.substring(file.length - 4, file.length) != ".cpp") {
+            vscode.window.showErrorMessage('Invalid File');
+            return;
+        }
+        const file_address = file.substring(0, file.lastIndexOf('\\'));
+        const file_name = file.substring(file.lastIndexOf('\\') + 1, file.length - 4);
+        let Terminal = vscode.window.activeTerminal;
+        if (!Terminal) {
+            Terminal = vscode.window.createTerminal('powershell');
+        }
+        Terminal.show();
+        Terminal.sendText('cd \"' + file_address + '\"');
+        Terminal.sendText('run /f \"' + file_name + '.cpp\"');
+    }));
+    context.subscriptions.push(vscode.commands.registerCommand('orita.enter-address', function () {
+        const activeEditor = vscode.window.activeTextEditor;
+        if (!activeEditor) {
+            vscode.window.showErrorMessage('Invalid File');
+            return;
+        }
+        const file = activeEditor.document.fileName;
+        const file_address = file.substring(0, file.lastIndexOf('\\'));
+        let Terminal = vscode.window.activeTerminal;
+        if (!Terminal) {
+            Terminal = vscode.window.createTerminal('powershell');
+        }
+        Terminal.show();
+        Terminal.sendText('cd \"' + file_address + '\"');
+    }));
+}
+exports.activate = activate;
+function deactivate() { }
+exports.deactivate = deactivate;
+
+})();
+
+module.exports = __webpack_exports__;
+/******/ })()
+;
+//# sourceMappingURL=extension.js.map
