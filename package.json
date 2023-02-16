@@ -2,11 +2,12 @@
     "name": "orita",
     "displayName": "Orita",
     "description": "Useful OI Tools",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "2745518585",
     "engines": {
         "vscode": "^1.75.0"
     },
+    "icon": "vscode-Orita.png",
     "categories": [
         "Other"
     ],
