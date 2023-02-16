@@ -15,15 +15,7 @@
         "type": "git",
         "url": "https://github.com/2745518585/vscode-Orita.git"
     },
-    "activationEvents": [
-        "onCommand:orita.compile-run",
-        "onCommand:orita.compile",
-        "onCommand:orita.run",
-        "onCommand:orita.inst-run",
-        "onCommand:orita.inst-chdata-in",
-        "onCommand:orita.inst-chdata-out",
-        "onCommand:orita.enter-address"
-    ],
+    "activationEvents": [],
     "main": "./dist/extension.js",
     "contributes": {
         "commands": [
