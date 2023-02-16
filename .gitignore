@@ -1,4 +1,4 @@
-dist\
+.vscode
+dist
 node_modules
 *.vsix
-.vscode
