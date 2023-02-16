@@ -1,0 +1,116 @@
+{
+    "name": "orita",
+    "displayName": "Orita",
+    "description": "Useful OI Tools",
+    "version": "0.0.2",
+    "publisher": "2745518585",
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/2745518585/vscode-Orita.git"
+    },
+    "activationEvents": [
+        "onCommand:orita.compile-run",
+        "onCommand:orita.compile",
+        "onCommand:orita.run",
+        "onCommand:orita.inst-run",
+        "onCommand:orita.inst-chdata-in",
+        "onCommand:orita.inst-chdata-out",
+        "onCommand:orita.enter-address"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "orita.compile-run",
+                "title": "Orita: Compile-run"
+            },
+            {
+                "command": "orita.compile",
+                "title": "Orita: Compile"
+            },
+            {
+                "command": "orita.run",
+                "title": "Orita: Run"
+            },
+            {
+                "command": "orita.inst-run",
+                "title": "Orita: instruct: run"
+            },
+            {
+                "command": "orita.inst-chdata-in",
+                "title": "Orita: instruct: chdata-in"
+            },
+            {
+                "command": "orita.inst-chdata-out",
+                "title": "Orita: instruct: chdata-out"
+            },
+            {
+                "command": "orita.enter-address",
+                "title": "Orita: Enter-address"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "orita.compile-run",
+                "key": "f6"
+            },
+            {
+                "command": "orita.compile",
+                "key": "ctrl+f6"
+            },
+            {
+                "command": "orita.run",
+                "key": "alt+f6"
+            },
+            {
+                "command": "orita.inst-run",
+                "key": "f7"
+            },
+            {
+                "command": "orita.inst-chdata-in",
+                "key": "ctrl+f7"
+            },
+            {
+                "command": "orita.inst-chdata-out",
+                "key": "alt+f7"
+            },
+            {
+                "command": "orita.enter-address",
+                "key": "f8"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run package",
+        "compile": "webpack",
+        "watch": "webpack --watch",
+        "package": "webpack --mode production --devtool hidden-source-map",
+        "compile-tests": "tsc -p . --outDir out",
+        "watch-tests": "tsc -p . -w --outDir out",
+        "pretest": "npm run compile-tests && npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.75.0",
+        "@types/glob": "^8.0.1",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "16.x",
+        "@typescript-eslint/eslint-plugin": "^5.49.0",
+        "@typescript-eslint/parser": "^5.49.0",
+        "eslint": "^8.33.0",
+        "glob": "^8.1.0",
+        "mocha": "^10.1.0",
+        "typescript": "^4.9.4",
+        "ts-loader": "^9.4.2",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1",
+        "@vscode/test-electron": "^2.2.2"
+    }
+}
