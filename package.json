@@ -18,6 +18,9 @@
         "onCommand:orita.compile-run",
         "onCommand:orita.compile",
         "onCommand:orita.run",
+        "onCommand:orita.inst-run",
+        "onCommand:orita.inst-chdata-in",
+        "onCommand:orita.inst-chdata-out",
         "onCommand:orita.enter-address"
     ],
     "main": "./dist/extension.js",
@@ -36,6 +39,18 @@
                 "title": "Orita: Run"
             },
             {
+                "command": "orita.inst-run",
+                "title": "Orita: instruct: run"
+            },
+            {
+                "command": "orita.inst-chdata-in",
+                "title": "Orita: instruct: chdata-in"
+            },
+            {
+                "command": "orita.inst-chdata-out",
+                "title": "Orita: instruct: chdata-out"
+            },
+            {
                 "command": "orita.enter-address",
                 "title": "Orita: Enter-address"
             }
@@ -51,11 +66,23 @@
             },
             {
                 "command": "orita.run",
+                "key": "alt+f6"
+            },
+            {
+                "command": "orita.inst-run",
                 "key": "f7"
             },
             {
+                "command": "orita.inst-chdata-in",
+                "key": "ctrl+f7"
+            },
+            {
+                "command": "orita.inst-chdata-out",
+                "key": "alt+f7"
+            },
+            {
                 "command": "orita.enter-address",
-                "key": "f9"
+                "key": "f8"
             }
         ]
     },
