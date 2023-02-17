@@ -2,7 +2,7 @@
     "name": "orita",
     "displayName": "Orita",
     "description": "Useful OI Tools",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "2745518585",
     "engines": {
         "vscode": "^1.75.0"
@@ -20,7 +20,7 @@
     "contributes": {
         "commands": [
             {
-                "command": "orita.compile-run",
+                "command": "orita.compile-runs",
                 "title": "Orita: Compile-run"
             },
             {
@@ -28,20 +28,24 @@
                 "title": "Orita: Compile"
             },
             {
-                "command": "orita.run",
+                "command": "orita.runs",
                 "title": "Orita: Run"
             },
             {
-                "command": "orita.inst-run",
+                "command": "orita.run",
                 "title": "Orita: instruct: run"
             },
             {
-                "command": "orita.inst-chdata-in",
+                "command": "orita.chdata-in",
                 "title": "Orita: instruct: chdata-in"
             },
             {
-                "command": "orita.inst-chdata-out",
+                "command": "orita.chdata-out",
                 "title": "Orita: instruct: chdata-out"
+            },
+            {
+                "command": "orita.compare-run-data",
+                "title": "Orita: Compare run data"
             },
             {
                 "command": "orita.enter-address",
@@ -50,7 +54,7 @@
         ],
         "keybindings": [
             {
-                "command": "orita.compile-run",
+                "command": "orita.compile-runs",
                 "key": "f6"
             },
             {
@@ -58,20 +62,24 @@
                 "key": "ctrl+f6"
             },
             {
-                "command": "orita.run",
+                "command": "orita.runs",
                 "key": "alt+f6"
             },
             {
-                "command": "orita.inst-run",
+                "command": "orita.run",
                 "key": "f7"
             },
             {
-                "command": "orita.inst-chdata-in",
+                "command": "orita.chdata-in",
                 "key": "ctrl+f7"
             },
             {
-                "command": "orita.inst-chdata-out",
+                "command": "orita.chdata-out",
                 "key": "alt+f7"
+            },
+            {
+                "command": "orita.compare-run-data",
+                "key": "ctrl+alt+f7"
             },
             {
                 "command": "orita.enter-address",
