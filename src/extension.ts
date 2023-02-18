@@ -18,8 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		Terminal.show();
 		Terminal.sendText('cd \"' + file_address + '\"');
-		Terminal.sendText('compile /f \"' + file_name + '.cpp\"');
-		Terminal.sendText('.\\"' + file_name + '.exe\"');
+		Terminal.sendText('compile /r \"' + file_name + '.cpp\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile', function () {
