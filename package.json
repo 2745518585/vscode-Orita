@@ -20,7 +20,7 @@
     "contributes": {
         "commands": [
             {
-                "command": "orita.compile-runs",
+                "command": "orita.compile-run",
                 "title": "Orita: Compile-run"
             },
             {
@@ -28,20 +28,24 @@
                 "title": "Orita: Compile"
             },
             {
-                "command": "orita.runs",
+                "command": "orita.run",
                 "title": "Orita: Run"
             },
             {
-                "command": "orita.run",
-                "title": "Orita: instruct: run"
+                "command": "orita.add-file",
+                "title": "Orita: add-file"
             },
             {
-                "command": "orita.chdata-in",
-                "title": "Orita: instruct: chdata-in"
+                "command": "orita.add-file1",
+                "title": "Orita: add-file1"
             },
             {
-                "command": "orita.chdata-out",
-                "title": "Orita: instruct: chdata-out"
+                "command": "orita.add-file2",
+                "title": "Orita: add-file2"
+            },
+            {
+                "command": "orita.add-file3",
+                "title": "Orita: add-file3"
             },
             {
                 "command": "orita.compare-run-data",
@@ -54,7 +58,7 @@
         ],
         "keybindings": [
             {
-                "command": "orita.compile-runs",
+                "command": "orita.compile-run",
                 "key": "f6"
             },
             {
@@ -62,19 +66,23 @@
                 "key": "ctrl+f6"
             },
             {
-                "command": "orita.runs",
+                "command": "orita.run",
                 "key": "alt+f6"
             },
             {
-                "command": "orita.run",
+                "command": "orita.add-file",
                 "key": "f7"
             },
             {
-                "command": "orita.chdata-in",
+                "command": "orita.add-file1",
+                "key": "shift+f7"
+            },
+            {
+                "command": "orita.add-file2",
                 "key": "ctrl+f7"
             },
             {
-                "command": "orita.chdata-out",
+                "command": "orita.add-file3",
                 "key": "alt+f7"
             },
             {

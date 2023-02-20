@@ -4,7 +4,7 @@ import * as fs from 'fs';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	context.subscriptions.push(vscode.commands.registerCommand('orita.compile-runs', function () {
+	context.subscriptions.push(vscode.commands.registerCommand('orita.compile-run', function () {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 		Terminal.sendText('compile /f \"' + file_name + '.cpp\"');
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('orita.runs', function () {
+	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		const file = activeEditor.document.fileName;
@@ -53,21 +53,28 @@ export function activate(context: vscode.ExtensionContext) {
 		Terminal.sendText('.\\"' + file_name + '.exe\"');
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
+	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file', function () {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
 		const file = activeEditor.document.fileName;
-		if (file.substring(file.length - 4, file.length) != ".cpp") return;
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		Terminal.sendText('run /f \"' + file + '\"');
+		if (file.substring(file.length - 4, file.length) == ".cpp") {
+			Terminal.sendText('run /f \"' + file + '\"');
+		}
+		else if (file.substring(file.length - 3, file.length) == ".in") {
+			Terminal.sendText('chdata /if \"' + file + '\"');
+		}
+		else if (file.substring(file.length - 4, file.length) == ".out" || file.substring(file.length - 4, file.length) == '.ans') {
+			Terminal.sendText('chdata /of \"' + file + '\"');
+		}
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('orita.chdata-in', function () {
+	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file1', function () {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
@@ -77,10 +84,12 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		Terminal.sendText('chdata /if \"' + file + '\"');
+		if (file.substring(file.length - 4, file.length) == ".cpp") {
+			Terminal.sendText('check /if \"' + file + '\"');
+		}
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('orita.chdata-out', function () {
+	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file2', function () {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
@@ -90,8 +99,26 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		Terminal.sendText('chdata /of \"' + file + '\"');
+		if (file.substring(file.length - 4, file.length) == ".cpp") {
+			Terminal.sendText('check /of \"' + file + '\"');
+		}
 	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file3', function () {
+		const activeEditor = vscode.window.activeTextEditor;
+		if (!activeEditor) return;
+		activeEditor.document.save();
+		const file = activeEditor.document.fileName;
+		let Terminal = vscode.window.activeTerminal;
+		if (!Terminal) {
+			Terminal = vscode.window.createTerminal('powershell');
+		}
+		Terminal.show();
+		if (file.substring(file.length - 4, file.length) == ".cpp") {
+			Terminal.sendText('check /af \"' + file + '\"');
+		}
+	}));
+
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compare-run-data', function () {
 		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.in')) return;
 		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.out')) return;
