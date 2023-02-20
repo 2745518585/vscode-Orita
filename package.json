@@ -21,7 +21,7 @@
         "commands": [
             {
                 "command": "orita.compile-run",
-                "title": "Orita: Compile-run"
+                "title": "Orita: Compile run"
             },
             {
                 "command": "orita.compile",
@@ -33,19 +33,23 @@
             },
             {
                 "command": "orita.add-file",
-                "title": "Orita: add-file"
+                "title": "Orita: add file"
             },
             {
                 "command": "orita.add-file1",
-                "title": "Orita: add-file1"
+                "title": "Orita: add file1"
             },
             {
                 "command": "orita.add-file2",
-                "title": "Orita: add-file2"
+                "title": "Orita: add file2"
             },
             {
                 "command": "orita.add-file3",
-                "title": "Orita: add-file3"
+                "title": "Orita: add file3"
+            },
+            {
+                "command": "orita.show-run-data",
+                "title": "Orita: Compare run data"
             },
             {
                 "command": "orita.compare-run-data",
@@ -53,7 +57,7 @@
             },
             {
                 "command": "orita.enter-address",
-                "title": "Orita: Enter-address"
+                "title": "Orita: Enter address"
             }
         ],
         "keybindings": [
@@ -75,15 +79,19 @@
             },
             {
                 "command": "orita.add-file1",
-                "key": "shift+f7"
-            },
-            {
-                "command": "orita.add-file2",
                 "key": "ctrl+f7"
             },
             {
-                "command": "orita.add-file3",
+                "command": "orita.add-file2",
                 "key": "alt+f7"
+            },
+            {
+                "command": "orita.add-file3",
+                "key": "shift+f7"
+            },
+            {
+                "command": "orita.show-run-data",
+                "key": "ctrl+shift+f7"
             },
             {
                 "command": "orita.compare-run-data",

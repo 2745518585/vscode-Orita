@@ -87,6 +87,9 @@ export function activate(context: vscode.ExtensionContext) {
 		if (file.substring(file.length - 4, file.length) == ".cpp") {
 			Terminal.sendText('check /if \"' + file + '\"');
 		}
+		else {
+			Terminal.sendText('chdata /if \"' + file + '\"');
+		}
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file2', function () {
@@ -101,6 +104,9 @@ export function activate(context: vscode.ExtensionContext) {
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == ".cpp") {
 			Terminal.sendText('check /of \"' + file + '\"');
+		}
+		else {
+			Terminal.sendText('chdata /of \"' + file + '\"');
 		}
 	}));
 
@@ -119,16 +125,19 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('orita.compare-run-data', function () {
+	context.subscriptions.push(vscode.commands.registerCommand('orita.show-run-data', function () {
 		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.in')) return;
-		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.out')) return;
-		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.ans')) return;
 		const data_in = vscode.Uri.file(process.env.APPDATA + '\\Orita\\data\\data.in');
-		const data_out = vscode.Uri.file(process.env.APPDATA + '\\Orita\\data\\data.out');
-		const data_ans = vscode.Uri.file(process.env.APPDATA + '\\Orita\\data\\data.ans');
 		vscode.workspace.openTextDocument(data_in).then((document) => {
 			vscode.window.showTextDocument(document, { preview: false });
 		});
+	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand('orita.compare-run-data', function () {
+		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.out')) return;
+		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.ans')) return;
+		const data_out = vscode.Uri.file(process.env.APPDATA + '\\Orita\\data\\data.out');
+		const data_ans = vscode.Uri.file(process.env.APPDATA + '\\Orita\\data\\data.ans');
 		vscode.commands.executeCommand('vscode.diff', data_out, data_ans);
 	}));
 

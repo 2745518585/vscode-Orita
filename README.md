@@ -10,7 +10,7 @@ Orita 的配套 vscode 拓展。
 
 ## 命令
 
-### Compile-run
+### Compile run
 
 ID: `orita.compile-run`
 
@@ -34,26 +34,66 @@ ID: `orita.run`
 
 运行 `.cpp` 文件编译得到的 `.exe` 文件。
 
-### instruct: run
+### add file
 
-ID: `orita.instruct-run`
+ID: `orita.add-file`
 
 快捷键: F7
 
-将当前文件作为 `run` 命令的 `/f` 参数。
+当前文件为 `.cpp` 后缀时，执行 `run /f file`。
 
-### instruct: chdata-in
+当前文件为 `.in` 后缀时，执行 `chdata /if file`。
 
-ID: `orita.instruct-chdata-in`
+当前文件为 `.out/.ans` 后缀时，执行 `chdata /of file`。
+
+### add file1
+
+ID: `orita.add-file1`
 
 快捷键: Ctrl + F7
 
-将当前文件作为 `chdata` 命令的 `/if` 参数并运行。
+当前文件为 `.cpp` 后缀时，执行 `check /if file`。
 
-### instruct: chdata-out
+否则，执行 `chdata /if file`。
 
-ID: `orita.instruct-chdata-out`
+### add file2
+
+ID: `orita.add-file2`
 
 快捷键: Alt + F7
 
-将当前文件作为 `chdata` 命令的 `/of` 参数并运行。
+当前文件为 `.cpp` 后缀时，执行 `check /of file`。
+
+否则，执行 `chdata /of file`。
+
+### add file3
+
+ID: `orita.add-file3`
+
+快捷键: Shift + F7
+
+当前文件为 `.cpp` 后缀时，执行 `check /af file`。
+
+### Show run data
+
+ID: `orita.show-run-data`
+
+快捷键: Ctrl + Shift + F7
+
+打开 `data.in` 文件。
+
+### Compare run data
+
+ID: `orita.compare-run-data`
+
+快捷键: Ctrl + Alt + F7
+
+打开 `data.out` 与 `data.ans` 的比较页面。
+
+### Enter address
+
+ID: `orita.enter-address`
+
+快捷键: F8
+
+将终端设置到当前文件所在目录。
