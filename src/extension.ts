@@ -18,7 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		Terminal.show();
 		Terminal.sendText('cd \"' + file_address + '\"');
-		Terminal.sendText('compile /r \"' + file_name + '.cpp\"');
+		Terminal.sendText('orita compile /r \"' + file_name + '.cpp\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile', function () {
@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.sendText('cd \"' + file_address + '\"');
-		Terminal.sendText('compile /f \"' + file_name + '.cpp\"');
+		Terminal.sendText('orita compile /f \"' + file_name + '.cpp\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
@@ -64,13 +64,13 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == ".cpp") {
-			Terminal.sendText('run /f \"' + file + '\"');
+			Terminal.sendText('orita run /f \"' + file + '\"');
 		}
 		else if (file.substring(file.length - 3, file.length) == ".in") {
-			Terminal.sendText('chdata /if \"' + file + '\"');
+			Terminal.sendText('orita chdata /if \"' + file + '\"');
 		}
 		else if (file.substring(file.length - 4, file.length) == ".out" || file.substring(file.length - 4, file.length) == '.ans') {
-			Terminal.sendText('chdata /of \"' + file + '\"');
+			Terminal.sendText('orita chdata /of \"' + file + '\"');
 		}
 	}));
 
@@ -85,10 +85,10 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == ".cpp") {
-			Terminal.sendText('check /if \"' + file + '\"');
+			Terminal.sendText('orita check /if \"' + file + '\"');
 		}
 		else {
-			Terminal.sendText('chdata /if \"' + file + '\"');
+			Terminal.sendText('orita chdata /if \"' + file + '\"');
 		}
 	}));
 
@@ -103,10 +103,10 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == ".cpp") {
-			Terminal.sendText('check /of \"' + file + '\"');
+			Terminal.sendText('orita check /of \"' + file + '\"');
 		}
 		else {
-			Terminal.sendText('chdata /of \"' + file + '\"');
+			Terminal.sendText('orita chdata /of \"' + file + '\"');
 		}
 	}));
 
@@ -121,7 +121,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == ".cpp") {
-			Terminal.sendText('check /af \"' + file + '\"');
+			Terminal.sendText('orita check /af \"' + file + '\"');
 		}
 	}));
 
