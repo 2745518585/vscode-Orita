@@ -58,7 +58,6 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		activeEditor.document.save();
 		const file = activeEditor.document.fileName;
-		vscode.window.showInformationMessage(file);
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == ".cpp") {
 			Terminal.sendText('orita run /f \"' + file + '\"');
