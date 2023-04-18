@@ -10,14 +10,12 @@ export function activate(context: vscode.ExtensionContext) {
 		activeEditor.document.save();
 		const file = activeEditor.document.fileName;
 		if (file.substring(file.length - 4, file.length) != ".cpp") return;
-		const file_address = file.substring(0, file.lastIndexOf('\\'));
-		const file_name = file.substring(file.lastIndexOf('\\') + 1, file.length - 4);
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		Terminal.sendText('orita compile /r \"' + file_address + '\\' + file_name + '.cpp\"');
+		Terminal.sendText('orita compile /r \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile', function () {
@@ -26,13 +24,11 @@ export function activate(context: vscode.ExtensionContext) {
 		activeEditor.document.save();
 		const file = activeEditor.document.fileName;
 		if (file.substring(file.length - 4, file.length) != ".cpp") return;
-		const file_address = file.substring(0, file.lastIndexOf('\\'));
-		const file_name = file.substring(file.lastIndexOf('\\') + 1, file.length - 4);
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
-		Terminal.sendText('orita compile /f \"' + file_address + '\\' + file_name + '.cpp\"');
+		Terminal.sendText('orita compile /f \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
@@ -47,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		Terminal.sendText('.\\"' + file_address + '\\' + file_name + '.exe\"');
+		Terminal.sendText('orita compile /t \"' + file_address + '\\' + file_name + '.exe\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file', function () {
