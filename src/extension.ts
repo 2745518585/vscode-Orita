@@ -17,8 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		Terminal.sendText('cd \"' + file_address + '\"');
-		Terminal.sendText('orita compile /r \"' + file_name + '.cpp\"');
+		Terminal.sendText('orita compile /r \"' + file_address + '\\' + file_name + '.cpp\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile', function () {
@@ -33,8 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
-		Terminal.sendText('cd \"' + file_address + '\"');
-		Terminal.sendText('orita compile /f \"' + file_name + '.cpp\"');
+		Terminal.sendText('orita compile /f \"' + file_address + '\\' + file_name + '.cpp\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
@@ -49,19 +47,22 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		Terminal.sendText('cd \"' + file_address + '\"');
-		Terminal.sendText('.\\"' + file_name + '.exe\"');
+		Terminal.sendText('.\\"' + file_address + '\\' + file_name + '.exe\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file', function () {
-		const activeEditor = vscode.window.activeTextEditor;
-		if (!activeEditor) return;
-		activeEditor.document.save();
-		const file = activeEditor.document.fileName;
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
+		const activeEditor = vscode.window.activeTextEditor;
+		if (!activeEditor) {
+			Terminal.sendText('orita run');
+			return;
+		}
+		activeEditor.document.save();
+		const file = activeEditor.document.fileName;
+		vscode.window.showInformationMessage(file);
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == ".cpp") {
 			Terminal.sendText('orita run /f \"' + file + '\"');
