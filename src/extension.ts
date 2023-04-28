@@ -2,6 +2,16 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 
+let sys = require('os').platform();
+
+let PATH_SE = "";
+if (sys == 'win32') PATH_SE = '\\';
+if (sys == 'linux') PATH_SE = '/';
+
+let appdata_path = "";
+if (sys == 'win32') if (process.env.APPDATA) appdata_path = process.env.APPDATA + PATH_SE + "Orita";
+if (sys == 'linux') if (process.env.HOME) appdata_path = process.env.HOME + PATH_SE + ".Orita";
+
 export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile-run', function () {
@@ -9,12 +19,14 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!activeEditor) return;
 		activeEditor.document.save();
 		const file = activeEditor.document.fileName;
-		if (file.substring(file.length - 4, file.length) != ".cpp") return;
+		if (file.substring(file.length - 4, file.length) != '.cpp') return;
+		const file_address = file.substring(0, file.lastIndexOf(PATH_SE));
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
+		Terminal.sendText('cd \"' + file_address + '\"');
 		Terminal.sendText('orita compile /r \"' + file + '\"');
 	}));
 
@@ -23,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!activeEditor) return;
 		activeEditor.document.save();
 		const file = activeEditor.document.fileName;
-		if (file.substring(file.length - 4, file.length) != ".cpp") return;
+		if (file.substring(file.length - 4, file.length) != '.cpp') return;
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
@@ -35,15 +47,16 @@ export function activate(context: vscode.ExtensionContext) {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		const file = activeEditor.document.fileName;
-		if (file.substring(file.length - 4, file.length) != ".cpp") return;
-		const file_address = file.substring(0, file.lastIndexOf('\\'));
-		const file_name = file.substring(file.lastIndexOf('\\') + 1, file.length - 4);
+		if (file.substring(file.length - 4, file.length) != '.cpp') return;
+		const file_address = file.substring(0, file.lastIndexOf(PATH_SE));
+		const file_name = file.substring(file.lastIndexOf(PATH_SE) + 1, file.length - 4);
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		Terminal.sendText('orita compile /t \"' + file_address + '\\' + file_name + '.exe\"');
+		Terminal.sendText('cd \"' + file_address + '\"');
+		Terminal.sendText('orita compile /t \"' + file_address + PATH_SE + file_name + '.exe\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file', function () {
@@ -59,13 +72,13 @@ export function activate(context: vscode.ExtensionContext) {
 		activeEditor.document.save();
 		const file = activeEditor.document.fileName;
 		Terminal.show();
-		if (file.substring(file.length - 4, file.length) == ".cpp") {
+		if (file.substring(file.length - 4, file.length) == '.cpp') {
 			Terminal.sendText('orita run /f \"' + file + '\"');
 		}
-		else if (file.substring(file.length - 3, file.length) == ".in") {
+		else if (file.substring(file.length - 3, file.length) == '.in') {
 			Terminal.sendText('orita chdata /if \"' + file + '\"');
 		}
-		else if (file.substring(file.length - 4, file.length) == ".out" || file.substring(file.length - 4, file.length) == '.ans') {
+		else if (file.substring(file.length - 4, file.length) == '.out' || file.substring(file.length - 4, file.length) == '.ans') {
 			Terminal.sendText('orita chdata /of \"' + file + '\"');
 		}
 	}));
@@ -80,7 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		if (file.substring(file.length - 4, file.length) == ".cpp") {
+		if (file.substring(file.length - 4, file.length) == '.cpp') {
 			Terminal.sendText('orita check /if \"' + file + '\"');
 		}
 		else {
@@ -98,7 +111,7 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		if (file.substring(file.length - 4, file.length) == ".cpp") {
+		if (file.substring(file.length - 4, file.length) == '.cpp') {
 			Terminal.sendText('orita check /of \"' + file + '\"');
 		}
 		else {
@@ -116,24 +129,24 @@ export function activate(context: vscode.ExtensionContext) {
 			Terminal = vscode.window.createTerminal('powershell');
 		}
 		Terminal.show();
-		if (file.substring(file.length - 4, file.length) == ".cpp") {
+		if (file.substring(file.length - 4, file.length) == '.cpp') {
 			Terminal.sendText('orita check /af \"' + file + '\"');
 		}
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.show-run-data', function () {
-		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.in')) return;
-		const data_in = vscode.Uri.file(process.env.APPDATA + '\\Orita\\data\\data.in');
+		if (!fs.existsSync(appdata_path + PATH_SE + 'data' + PATH_SE + 'data.in')) return;
+		const data_in = vscode.Uri.file(appdata_path + PATH_SE + 'data' + PATH_SE + 'data.in');
 		vscode.workspace.openTextDocument(data_in).then((document) => {
 			vscode.window.showTextDocument(document, { preview: false });
 		});
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compare-run-data', function () {
-		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.out')) return;
-		if (!fs.existsSync(process.env.APPDATA + '\\Orita\\data\\data.ans')) return;
-		const data_out = vscode.Uri.file(process.env.APPDATA + '\\Orita\\data\\data.out');
-		const data_ans = vscode.Uri.file(process.env.APPDATA + '\\Orita\\data\\data.ans');
+		if (!fs.existsSync(appdata_path + PATH_SE + 'data' + PATH_SE + 'data.out')) return;
+		if (!fs.existsSync(appdata_path + PATH_SE + 'data' + PATH_SE + 'data.ans')) return;
+		const data_out = vscode.Uri.file(appdata_path + PATH_SE + 'data' + PATH_SE + 'data.out');
+		const data_ans = vscode.Uri.file(appdata_path + PATH_SE + 'data' + PATH_SE + 'data.ans');
 		vscode.commands.executeCommand('vscode.diff', data_out, data_ans);
 	}));
 
@@ -141,7 +154,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		const file = activeEditor.document.fileName;
-		const file_address = file.substring(0, file.lastIndexOf('\\'));
+		const file_address = file.substring(0, file.lastIndexOf(PATH_SE));
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');

@@ -2,7 +2,7 @@
     "name": "orita",
     "displayName": "Orita",
     "description": "Useful OI Tools",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "publisher": "2745518585",
     "engines": {
         "vscode": "^1.75.0"
@@ -49,7 +49,7 @@
             },
             {
                 "command": "orita.show-run-data",
-                "title": "Orita: Compare run data"
+                "title": "Orita: Show run data"
             },
             {
                 "command": "orita.compare-run-data",
