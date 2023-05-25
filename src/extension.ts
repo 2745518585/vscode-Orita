@@ -12,13 +12,22 @@ let appdata_path = "";
 if (sys == 'win32') if (process.env.APPDATA) appdata_path = process.env.APPDATA + PATH_SE + "Orita";
 if (sys == 'linux') if (process.env.HOME) appdata_path = process.env.HOME + PATH_SE + ".Orita";
 
+function check_filename(file: string): string {
+	let pos = file.indexOf('%');
+	while (pos != -1) {
+		file = file.substring(0, pos) + '%' + file.substring(pos, file.length);
+		pos = file.indexOf('%', pos + 2);
+	}
+	return file;
+}
+
 export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile-run', function () {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
-		const file = activeEditor.document.fileName;
+		const file = check_filename(activeEditor.document.fileName);
 		if (file.substring(file.length - 4, file.length) != '.cpp') return;
 		const file_address = file.substring(0, file.lastIndexOf(PATH_SE));
 		let Terminal = vscode.window.activeTerminal;
@@ -34,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
-		const file = activeEditor.document.fileName;
+		const file = check_filename(activeEditor.document.fileName);
 		if (file.substring(file.length - 4, file.length) != '.cpp') return;
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
@@ -46,7 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
-		const file = activeEditor.document.fileName;
+		const file = check_filename(activeEditor.document.fileName);
 		if (file.substring(file.length - 4, file.length) != '.cpp') return;
 		const file_address = file.substring(0, file.lastIndexOf(PATH_SE));
 		const file_name = file.substring(file.lastIndexOf(PATH_SE) + 1, file.length - 4);
@@ -70,7 +79,7 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		activeEditor.document.save();
-		const file = activeEditor.document.fileName;
+		const file = check_filename(activeEditor.document.fileName);
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == '.cpp') {
 			Terminal.sendText('orita run /f \"' + file + '\"');
@@ -87,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
-		const file = activeEditor.document.fileName;
+		const file = check_filename(activeEditor.document.fileName);
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
@@ -105,7 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
-		const file = activeEditor.document.fileName;
+		const file = check_filename(activeEditor.document.fileName);
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
@@ -123,7 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
 		activeEditor.document.save();
-		const file = activeEditor.document.fileName;
+		const file = check_filename(activeEditor.document.fileName);
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
 			Terminal = vscode.window.createTerminal('powershell');
@@ -153,7 +162,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('orita.enter-address', function () {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!activeEditor) return;
-		const file = activeEditor.document.fileName;
+		const file = check_filename(activeEditor.document.fileName);
 		const file_address = file.substring(0, file.lastIndexOf(PATH_SE));
 		let Terminal = vscode.window.activeTerminal;
 		if (!Terminal) {
