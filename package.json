@@ -2,7 +2,7 @@
     "name": "orita",
     "displayName": "Orita",
     "description": "Useful OI Tools",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "publisher": "2745518585",
     "engines": {
         "vscode": "^1.75.0"
