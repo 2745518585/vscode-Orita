@@ -58,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile', function () {
-		const file = check_filename(context.workspaceState.get('last_compile'));
+		const file = get_activefile(context.workspaceState.get('last_compile'));
 		if (file == undefined || file.substring(file.length - 4, file.length) != '.cpp') return;
 		save_activefile();
 		context.workspaceState.update('last_compile', file);
@@ -68,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
-		const file = check_filename(context.workspaceState.get('last_compile'));
+		const file = get_activefile(context.workspaceState.get('last_compile'));
 		if (file == undefined || file.substring(file.length - 4, file.length) != '.cpp') return;
 		save_activefile();
 		context.workspaceState.update('last_compile', file);
