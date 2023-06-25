@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 		context.workspaceState.update('last_compile', file);
 		const file_address = file.substring(0, file.lastIndexOf(PS));
 		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal('powershell');
+		if (!Terminal) Terminal = vscode.window.createTerminal();
 		Terminal.show();
 		Terminal.sendText('cd \"' + file_address + '\"');
 		Terminal.sendText('orita compile /r \"' + file + '\"');
@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 		save_activefile();
 		context.workspaceState.update('last_compile', file);
 		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal('powershell');
+		if (!Terminal) Terminal = vscode.window.createTerminal();
 		Terminal.sendText('orita compile /f \"' + file + '\"');
 	}));
 
@@ -75,7 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const file_address = file.substring(0, file.lastIndexOf(PS));
 		const file_name = file.substring(file.lastIndexOf(PS) + 1, file.length - 4);
 		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal('powershell');
+		if (!Terminal) Terminal = vscode.window.createTerminal();
 		Terminal.show();
 		Terminal.sendText('cd \"' + file_address + '\"');
 		Terminal.sendText('orita compile /t \"' + file_address + PS + file_name + exe_suf + '\"');
@@ -84,7 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file', function () {
 		const file = get_activefile();
 		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal('powershell');
+		if (!Terminal) Terminal = vscode.window.createTerminal();
 		if (file == undefined) { Terminal.sendText('orita run'); return; }
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == '.cpp') {
@@ -99,7 +99,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const file = get_activefile();
 		if (file == undefined) return;
 		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal('powershell');
+		if (!Terminal) Terminal = vscode.window.createTerminal();
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == '.cpp') Terminal.sendText('orita check /if \"' + file + '\"');
 		else Terminal.sendText('orita chdata /if \"' + file + '\"');
@@ -109,7 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const file = get_activefile();
 		if (file == undefined) return;
 		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal('powershell');
+		if (!Terminal) Terminal = vscode.window.createTerminal();
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == '.cpp') Terminal.sendText('orita check /of \"' + file + '\"');
 		else Terminal.sendText('orita chdata /of \"' + file + '\"');
@@ -119,7 +119,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const file = get_activefile();
 		if (file == undefined) return;
 		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal('powershell');
+		if (!Terminal) Terminal = vscode.window.createTerminal();
 		Terminal.show();
 		if (file.substring(file.length - 4, file.length) == '.cpp') Terminal.sendText('orita check /af \"' + file + '\"');
 	}));
@@ -145,7 +145,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (file == undefined) return;
 		const file_address = file.substring(0, file.lastIndexOf(PS));
 		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal('powershell');
+		if (!Terminal) Terminal = vscode.window.createTerminal();
 		Terminal.show();
 		Terminal.sendText('cd \"' + file_address + '\"');
 	}));
