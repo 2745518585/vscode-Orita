@@ -42,86 +42,98 @@ function save_activefile(): void {
 	if (activeEditor) activeEditor.document.save();
 }
 
+function get_terminal(): vscode.Terminal {
+	return vscode.window.activeTerminal ? vscode.window.activeTerminal : vscode.window.createTerminal();
+}
+
+function get_fileaddress(file: string): string {
+	return file.substring(0, file.lastIndexOf(PS));
+}
+
+function get_filename(file: string): string {
+	return file.substring(file.lastIndexOf(PS) + 1, file.length);
+}
+
+function get_filenamepre(file: string): string {
+	const filename = get_filename(file);
+	return file.substring(0, file.lastIndexOf('.'));
+}
+
+function get_filenamesuf(file: string): string {
+	const filename = get_filename(file);
+	return file.substring(file.lastIndexOf('.'), file.length);
+}
+
 export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile-run', function () {
 		const file = get_activefile(context.workspaceState.get('last_compile'));
-		if (file == undefined || file.substring(file.length - 4, file.length) != '.cpp') return;
-		save_activefile();
+		if (file == undefined || get_filenamesuf(file) != '.cpp') return;
 		context.workspaceState.update('last_compile', file);
-		const file_address = file.substring(0, file.lastIndexOf(PS));
-		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal();
+		save_activefile();
+		const Terminal = get_terminal();
 		Terminal.show();
-		Terminal.sendText('cd \"' + file_address + '\"');
+		Terminal.sendText('cd \"' + get_fileaddress(file) + '\"');
 		Terminal.sendText('orita compile /r \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile', function () {
 		const file = get_activefile(context.workspaceState.get('last_compile'));
-		if (file == undefined || file.substring(file.length - 4, file.length) != '.cpp') return;
-		save_activefile();
+		if (file == undefined || get_filenamesuf(file) != '.cpp') return;
 		context.workspaceState.update('last_compile', file);
-		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal();
+		save_activefile();
+		const Terminal = get_terminal();
 		Terminal.sendText('orita compile /f \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
 		const file = get_activefile(context.workspaceState.get('last_compile'));
-		if (file == undefined || file.substring(file.length - 4, file.length) != '.cpp') return;
-		save_activefile();
+		if (file == undefined || get_filenamesuf(file) != '.cpp') return;
 		context.workspaceState.update('last_compile', file);
-		const file_address = file.substring(0, file.lastIndexOf(PS));
-		const file_name = file.substring(file.lastIndexOf(PS) + 1, file.length - 4);
-		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal();
+		save_activefile();
+		const Terminal = get_terminal();
 		Terminal.show();
-		Terminal.sendText('cd \"' + file_address + '\"');
-		Terminal.sendText('orita compile /t \"' + file_address + PS + file_name + exe_suf + '\"');
+		Terminal.sendText('cd \"' + get_fileaddress(file) + '\"');
+		Terminal.sendText('orita compile /t \"' + get_fileaddress(file) + PS + get_filenamepre(file) + exe_suf + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file', function () {
 		const file = get_activefile();
-		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal();
-		if (file == undefined) { Terminal.sendText('orita run'); return; }
+		const Terminal = get_terminal();
 		Terminal.show();
-		if (file.substring(file.length - 4, file.length) == '.cpp') {
+		if (file == undefined) Terminal.sendText('orita run');
+		else if (get_filenamesuf(file) == '.cpp') {
 			save_activefile();
 			Terminal.sendText('orita run /f \"' + file + '\"');
 		}
-		else if (file.substring(file.length - 3, file.length) == '.in') Terminal.sendText('orita chdata /if \"' + file + '\"');
-		else if (file.substring(file.length - 4, file.length) == '.out' || file.substring(file.length - 4, file.length) == '.ans') Terminal.sendText('orita chdata /of \"' + file + '\"');
+		else if (get_filenamesuf(file) == '.in') Terminal.sendText('orita chdata /if \"' + file + '\"');
+		else if (get_filenamesuf(file) == '.out' || get_filenamesuf(file) == '.ans') Terminal.sendText('orita chdata /of \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file1', function () {
 		const file = get_activefile();
 		if (file == undefined) return;
-		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal();
+		const Terminal = get_terminal();
 		Terminal.show();
-		if (file.substring(file.length - 4, file.length) == '.cpp') Terminal.sendText('orita check /if \"' + file + '\"');
+		if (get_filenamesuf(file) == '.cpp') Terminal.sendText('orita check /if \"' + file + '\"');
 		else Terminal.sendText('orita chdata /if \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file2', function () {
 		const file = get_activefile();
 		if (file == undefined) return;
-		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal();
+		const Terminal = get_terminal();
 		Terminal.show();
-		if (file.substring(file.length - 4, file.length) == '.cpp') Terminal.sendText('orita check /of \"' + file + '\"');
+		if (get_filenamesuf(file) == '.cpp') Terminal.sendText('orita check /of \"' + file + '\"');
 		else Terminal.sendText('orita chdata /of \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file3', function () {
 		const file = get_activefile();
 		if (file == undefined) return;
-		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal();
+		const Terminal = get_terminal();
 		Terminal.show();
-		if (file.substring(file.length - 4, file.length) == '.cpp') Terminal.sendText('orita check /af \"' + file + '\"');
+		if (get_filenamesuf(file) == '.cpp') Terminal.sendText('orita check /af \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.show-run-data', function () {
@@ -144,8 +156,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const file = get_activefile();
 		if (file == undefined) return;
 		const file_address = file.substring(0, file.lastIndexOf(PS));
-		let Terminal = vscode.window.activeTerminal;
-		if (!Terminal) Terminal = vscode.window.createTerminal();
+		const Terminal = get_terminal();
 		Terminal.show();
 		Terminal.sendText('cd \"' + file_address + '\"');
 	}));
