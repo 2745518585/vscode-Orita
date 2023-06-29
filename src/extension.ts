@@ -56,12 +56,12 @@ function get_filename(file: string): string {
 
 function get_filenamepre(file: string): string {
 	const filename = get_filename(file);
-	return file.substring(0, file.lastIndexOf('.'));
+	return filename.substring(0, filename.lastIndexOf('.'));
 }
 
 function get_filenamesuf(file: string): string {
 	const filename = get_filename(file);
-	return file.substring(file.lastIndexOf('.'), file.length);
+	return filename.substring(filename.lastIndexOf('.'), filename.length);
 }
 
 export function activate(context: vscode.ExtensionContext) {
