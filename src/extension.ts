@@ -101,10 +101,14 @@ export function activate(context: vscode.ExtensionContext) {
 		const file = get_activefile();
 		const Terminal = get_terminal();
 		Terminal.show();
-		if (file == undefined) Terminal.sendText('orita run');
+		if (file == undefined) {
+			if (context.workspaceState.get('run-with-checker', false)) Terminal.sendText('orita run /c');
+			else Terminal.sendText('orita run');
+		}
 		else if (get_filenamesuf(file) == '.cpp') {
 			save_activefile();
-			Terminal.sendText('orita run /f \"' + file + '\"');
+			if (context.workspaceState.get('run-with-checker', false)) Terminal.sendText('orita run /f \"' + file + '\" /c');
+			else Terminal.sendText('orita run /f \"' + file + '\"');
 		}
 		else if (get_filenamesuf(file) == '.in') Terminal.sendText('orita chdata /if \"' + file + '\"');
 		else if (get_filenamesuf(file) == '.out' || get_filenamesuf(file) == '.ans') Terminal.sendText('orita chdata /of \"' + file + '\"');
@@ -134,6 +138,13 @@ export function activate(context: vscode.ExtensionContext) {
 		const Terminal = get_terminal();
 		Terminal.show();
 		if (get_filenamesuf(file) == '.cpp') Terminal.sendText('orita check /af \"' + file + '\"');
+	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand('orita.use-checker', function () {
+		let use_checker = !context.workspaceState.get('run-with-checker', false);
+		context.workspaceState.update('run-with-checker', use_checker);
+		if (use_checker) vscode.window.setStatusBarMessage('Orita: turn on run-with-checker',2000);
+		else vscode.window.setStatusBarMessage('Orita: turn off run-with-checker',2000);
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.show-run-data', function () {

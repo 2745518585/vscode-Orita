@@ -48,6 +48,10 @@
                 "title": "Orita: add file3"
             },
             {
+                "command": "orita.use-checker",
+                "title": "Orita: use checker"
+            },
+            {
                 "command": "orita.show-run-data",
                 "title": "Orita: Show run data"
             },
@@ -88,6 +92,10 @@
             {
                 "command": "orita.add-file3",
                 "key": "shift+f7"
+            },
+            {
+                "command": "orita.use-checker",
+                "key": "alt+shift+f7"
             },
             {
                 "command": "orita.show-run-data",
