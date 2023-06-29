@@ -74,6 +74,14 @@ ID: `orita.add-file3`
 
 当前文件为 `.cpp` 后缀时，执行 `check /af file`。
 
+### use checker
+
+ID: `orita.use-checker`
+
+快捷键: Alt + Shift + F7
+
+切换 `run` 是否添加 `/c`。
+
 ### Show run data
 
 ID: `orita.show-run-data`
