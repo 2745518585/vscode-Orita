@@ -143,8 +143,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('orita.use-checker', function () {
 		let use_checker = !context.workspaceState.get('run-with-checker', false);
 		context.workspaceState.update('run-with-checker', use_checker);
-		if (use_checker) vscode.window.setStatusBarMessage('Orita: turn on run-with-checker',2000);
-		else vscode.window.setStatusBarMessage('Orita: turn off run-with-checker',2000);
+		if (use_checker) vscode.window.setStatusBarMessage('Orita: run-with-checker: on', 2000);
+		else vscode.window.setStatusBarMessage('Orita: run-with-checker: off', 2000);
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.show-run-data', function () {
