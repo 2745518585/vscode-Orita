@@ -83,7 +83,7 @@
 
 - 选择是否使用 `checker`。
 
-## v0.0.11
+## v0.0.12
 
 Applicable Orita version: Dev0.2.0
 
