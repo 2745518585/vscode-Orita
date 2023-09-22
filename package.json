@@ -2,7 +2,7 @@
     "name": "orita",
     "displayName": "Orita",
     "description": "Useful OI Tools",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "publisher": "2745518585",
     "engines": {
         "vscode": "^1.75.0"
@@ -48,10 +48,6 @@
                 "title": "Orita: add file3"
             },
             {
-                "command": "orita.use-checker",
-                "title": "Orita: use checker"
-            },
-            {
                 "command": "orita.show-run-data",
                 "title": "Orita: Show run data"
             },
@@ -92,10 +88,6 @@
             {
                 "command": "orita.add-file3",
                 "key": "shift+f7"
-            },
-            {
-                "command": "orita.use-checker",
-                "key": "alt+shift+f7"
             },
             {
                 "command": "orita.show-run-data",

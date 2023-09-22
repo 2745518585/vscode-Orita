@@ -82,3 +82,13 @@
 ### 新增
 
 - 选择是否使用 `checker`。
+
+## v0.0.11
+
+Applicable Orita version: Dev0.2.0
+
+### Changes
+
+- Removed `use-checker`.
+- Copy path while use `enter-address`.
+- Adapted Orita Dev0.2.0.

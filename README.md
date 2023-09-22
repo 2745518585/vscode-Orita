@@ -90,14 +90,6 @@ ID: `orita.show-run-data`
 
 打开 `data.in` 文件。
 
-### Compare run data
-
-ID: `orita.compare-run-data`
-
-快捷键: Ctrl + Alt + F7
-
-打开 `data.out` 与 `data.ans` 的比较页面。
-
 ### Enter address
 
 ID: `orita.enter-address`
