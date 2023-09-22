@@ -87,8 +87,12 @@
 
 Applicable Orita version: Dev0.2.0
 
+### Features
+
+- Copy path while use `enter-address`.
+- Adapted Orita Dev0.2.0.
+- Add GitHub Actions.
+
 ### Changes
 
 - Removed `use-checker`.
-- Copy path while use `enter-address`.
-- Adapted Orita Dev0.2.0.
