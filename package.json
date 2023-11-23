@@ -103,7 +103,17 @@
                 "command": "orita.enter-address",
                 "key": "f8"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "Orita",
+            "properties": {
+                "orita.enable_add_include_path": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Add orita path to include path"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run package",
