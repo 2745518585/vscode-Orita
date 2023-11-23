@@ -1,6 +1,7 @@
 
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import { execSync } from 'child_process';
 
 const sys = require('os').platform();
 
@@ -27,6 +28,18 @@ const appdata_path = (function (): string {
 	if (sys == 'linux') if (process.env.HOME) return process.env.HOME + PS + '.Orita';
 	return '';
 })();
+
+const file_path = function () {
+	try {
+		execSync('orita /path 2> ' + (sys == 'win32' ? process.env.TEMP + '/path.txt' : '/tmp/path.txt'));
+		const path = fs.readFileSync(sys == 'win32' ? process.env.TEMP + '/path.txt' : '/tmp/path.txt').toString();
+		return path;
+	}
+	catch (error) {
+		throw error;
+		throw 'Unable to invoke orita.';
+	}
+}();
 
 function check_filename(file: string | undefined): string | undefined {
 	if (file == undefined) return undefined;
@@ -70,7 +83,58 @@ function get_filenamesuf(file: string): string {
 	return filename.substring(filename.lastIndexOf('.'), filename.length);
 }
 
+
+function add_include_path(context: vscode.ExtensionContext) {
+	if (vscode.workspace.workspaceFolders) {
+		for (let i = 0; i < vscode.workspace.workspaceFolders.length; ++i) {
+			const path = vscode.workspace.workspaceFolders[i].uri.fsPath;
+			try {
+				let config = JSON.parse(fs.readFileSync(path + '/.vscode/c_cpp_properties.json').toString());
+				let if_change = false;
+				for (let j = 0; j < config["configurations"].length; ++j) {
+					try {
+						if (!config["configurations"][j]["includePath"].includes(file_path)) {
+							config["configurations"][j]["includePath"].push(file_path);
+							if_change = true;
+						}
+					}
+					catch (error) { }
+				}
+				if (if_change) {
+					let ask_include_path = async function () {
+						const settings = vscode.workspace.getConfiguration('orita');
+						if (settings.get<boolean>('enable_add_include_path') != true && context.globalState.get('ask_enable_add_include_path') != true) {
+							await context.globalState.update('ask_enable_add_include_path', true);
+							const result = await vscode.window.showInformationMessage('Enable to add the orita path to the include path', 'Yes', 'No');
+							if (result === 'Yes') {
+								await settings.update('enable_add_include_path', true, vscode.ConfigurationTarget.Global);
+							}
+							else if (result === 'No') {
+								await settings.update('enable_add_include_path', false, vscode.ConfigurationTarget.Global);
+							}
+							else await context.globalState.update('ask_enable_add_include_path', false);
+						}
+						if (settings.get<boolean>('enable_add_include_path') == true) {
+							fs.writeFileSync(path + '/.vscode/c_cpp_properties.json', JSON.stringify(config, null, 4));
+						}
+					};
+					ask_include_path();
+				}
+			}
+			catch (error) { }
+		}
+	}
+}
+
 export function activate(context: vscode.ExtensionContext) {
+
+	add_include_path(context);
+
+	vscode.workspace.onDidChangeConfiguration(event => {
+		if (event.affectsConfiguration('orita.enable_add_include_path')) {
+			add_include_path(context);
+		}
+	});
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile-run', function () {
 		const file = get_activefile(context.workspaceState.get('last_compile'));

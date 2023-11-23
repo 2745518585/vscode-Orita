@@ -96,3 +96,11 @@ Applicable Orita version: Dev0.2.0
 ### Changes
 
 - Removed `use-checker`.
+
+## v0.0.13
+
+Require Orita version: Dev0.2.2.
+
+### Features
+
+- Add orita file path to include path.

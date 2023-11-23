@@ -8,6 +8,10 @@
 
 Orita 的配套 vscode 拓展。
 
+## 行为
+
+如果设置 `orita.enable_add_include_path` 为真，会在扩展激活时（即打开任一 `cpp` 文件或运行任一命令时）或修改设置时检查 `.vscode/c_cpp_properties.json` 中的 `include path` 是否包含 orita file path，如没有则将其加入 `include path`。如果 `orita.enable_add_include_path` 为假，则尝试询问，此询问仅会进行一次。
+
 ## 命令
 
 ### Compile run
