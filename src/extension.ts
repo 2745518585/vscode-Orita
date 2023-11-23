@@ -1,6 +1,7 @@
 
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import { execSync } from 'child_process';
 
 const sys = require('os').platform();
 
@@ -27,6 +28,18 @@ const appdata_path = (function (): string {
 	if (sys == 'linux') if (process.env.HOME) return process.env.HOME + PS + '.Orita';
 	return '';
 })();
+
+const file_path = function () {
+	try {
+		execSync('orita /path 2> ' + (sys == 'win32' ? process.env.TEMP + '/path.txt' : '/tmp/path.txt'));
+		const path = fs.readFileSync(sys == 'win32' ? process.env.TEMP + '/path.txt' : '/tmp/path.txt').toString();
+		return path;
+	}
+	catch (error) {
+		throw error;
+		throw 'Unable to invoke orita.';
+	}
+}();
 
 function check_filename(file: string | undefined): string | undefined {
 	if (file == undefined) return undefined;
@@ -71,6 +84,25 @@ function get_filenamesuf(file: string): string {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+	if (vscode.workspace.workspaceFolders) {
+		for (let i = 0; i < vscode.workspace.workspaceFolders.length; ++i) {
+			const path = vscode.workspace.workspaceFolders[i].uri.fsPath;
+			console.log(path);
+			try {
+				let config = JSON.parse(fs.readFileSync(path + '/.vscode/c_cpp_properties.json').toString());
+				for (let j = 0; j < config["configurations"].length; ++j) {
+					try {
+						if (!config["configurations"][j]["includePath"].includes(file_path)) {
+							config["configurations"][j]["includePath"].push(file_path);
+						}
+					}
+					catch (error) { }
+				}
+				fs.writeFileSync(path + '/.vscode/c_cpp_properties.json', JSON.stringify(config, null, 4));
+			}
+			catch (error) { }
+		}
+	}
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile-run', function () {
 		const file = get_activefile(context.workspaceState.get('last_compile'));

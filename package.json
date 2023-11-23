@@ -2,7 +2,7 @@
     "name": "orita",
     "displayName": "Orita",
     "description": "Useful OI Tools",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "publisher": "2745518585",
     "engines": {
         "vscode": "^1.75.0"
@@ -15,7 +15,9 @@
         "type": "git",
         "url": "https://github.com/2745518585/vscode-Orita.git"
     },
-    "activationEvents": [],
+    "activationEvents": [
+        "onLanguage:cpp"
+    ],
     "main": "./dist/extension.js",
     "contributes": {
         "commands": [

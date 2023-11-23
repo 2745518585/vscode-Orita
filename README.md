@@ -8,6 +8,10 @@
 
 Orita 的配套 vscode 拓展。
 
+## 行为
+
+在激活时（即打开任一 `cpp` 文件或运行任一命令时）检查 `.vscode/c_cpp_properties.json` 中的 `include path` 是否包含 orita file path，如没有则将其加入 `include path`.
+
 ## 命令
 
 ### Compile run
