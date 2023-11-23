@@ -99,7 +99,7 @@ Applicable Orita version: Dev0.2.0
 
 ## v0.0.13
 
-Adapted Orita Dev0.2.2.
+Require Orita version: Dev0.2.2.
 
 ### Features
 
