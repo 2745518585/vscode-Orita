@@ -31,7 +31,7 @@ const appdata_path = (function (): string {
 
 const file_path = function () {
 	try {
-		execSync('orita /path 2> ' + (sys == 'win32' ? process.env.TEMP + '/path.txt' : '/tmp/path.txt'));
+		execSync('orita ' + OP('path') + ' 2> ' + (sys == 'win32' ? process.env.TEMP + '/path.txt' : '/tmp/path.txt'));
 		const path = fs.readFileSync(sys == 'win32' ? process.env.TEMP + '/path.txt' : '/tmp/path.txt').toString();
 		return path;
 	}
