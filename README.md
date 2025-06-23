@@ -8,6 +8,10 @@
 
 Orita 的配套 vscode 拓展。
 
+## 设置
+
+可以在设置 `orita.source_file_suf` 中添加或修改期望被 vscode-Orita 识别的源文件后缀名，以下说明中“源文件”的判断标准即为后缀名是否出现在该设置中。
+
 ## 行为
 
 如果设置 `orita.enable_add_include_path` 为真，会在扩展激活时（即打开任一 `cpp` 文件或运行任一命令时）或修改设置时检查 `.vscode/c_cpp_properties.json` 中的 `include path` 是否包含 orita file path，如没有则将其加入 `include path`。如果 `orita.enable_add_include_path` 为假，则尝试询问，此询问仅会进行一次。
@@ -30,21 +34,13 @@ ID: `orita.compile`
 
 编译 `.cpp` 源文件。
 
-### Run
-
-ID: `orita.run`
-
-快捷键: Alt + F6
-
-运行 `.cpp` 文件编译得到的 `.exe` 文件。
-
 ### add file
 
 ID: `orita.add-file`
 
 快捷键: F7
 
-当前文件为 `.cpp` 后缀时，执行 `run /f file`。
+当前文件为源文件时，执行 `run /f file`。
 
 当前文件为 `.in` 后缀时，执行 `chdata /if file`。
 
@@ -56,7 +52,7 @@ ID: `orita.add-file1`
 
 快捷键: Ctrl + F7
 
-当前文件为 `.cpp` 后缀时，执行 `check /if file`。
+当前文件为源文件时，执行 `check /if file`。
 
 否则，执行 `chdata /if file`。
 
@@ -66,7 +62,7 @@ ID: `orita.add-file2`
 
 快捷键: Alt + F7
 
-当前文件为 `.cpp` 后缀时，执行 `check /of file`。
+当前文件为源文件时，执行 `check /of file`。
 
 否则，执行 `chdata /of file`。
 
@@ -76,7 +72,7 @@ ID: `orita.add-file3`
 
 快捷键: Shift + F7
 
-当前文件为 `.cpp` 后缀时，执行 `check /af file`。
+当前文件为源文件时，执行 `check /af file`。
 
 ### use checker
 

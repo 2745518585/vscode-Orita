@@ -104,3 +104,11 @@ Require Orita version: Dev0.2.2.
 ### Features
 
 - Add orita file path to include path.
+
+## v0.0.14
+
+Require Orita version: Dev0.2.4.
+
+### Features
+
+- Allow configuring the expected source file extensions in settings

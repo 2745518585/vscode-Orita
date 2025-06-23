@@ -17,12 +17,6 @@ const OP = (function (str: string): string {
 	return '';
 });
 
-const exe_suf = (function (): string {
-	if (sys == 'win32') return '.exe';
-	if (sys == 'linux') return '';
-	return '';
-})();
-
 const appdata_path = (function (): string {
 	if (sys == 'win32') if (process.env.APPDATA) return process.env.APPDATA + PS + 'Orita';
 	if (sys == 'linux') if (process.env.HOME) return process.env.HOME + PS + '.Orita';
@@ -37,9 +31,10 @@ const file_path = function () {
 	}
 	catch (error) {
 		throw error;
-		throw 'Unable to invoke orita.';
 	}
 }();
+
+const source_file_suf = vscode.workspace.getConfiguration('orita').get<string[]>('source_file_suf') || [];
 
 function check_filename(file: string | undefined): string | undefined {
 	if (file == undefined) return undefined;
@@ -82,7 +77,6 @@ function get_filenamesuf(file: string): string {
 	const filename = get_filename(file);
 	return filename.substring(filename.lastIndexOf('.'), filename.length);
 }
-
 
 function add_include_path(context: vscode.ExtensionContext) {
 	if (vscode.workspace.workspaceFolders) {
@@ -138,7 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile-run', function () {
 		const file = get_activefile(context.workspaceState.get('last_compile'));
-		if (file == undefined || get_filenamesuf(file) != '.cpp') return;
+		if (file == undefined || !source_file_suf.includes(get_filenamesuf(file))) return;
 		context.workspaceState.update('last_compile', file);
 		save_activefile();
 		const Terminal = get_terminal();
@@ -149,22 +143,11 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.compile', function () {
 		const file = get_activefile(context.workspaceState.get('last_compile'));
-		if (file == undefined || get_filenamesuf(file) != '.cpp') return;
+		if (file == undefined || !source_file_suf.includes(get_filenamesuf(file))) return;
 		context.workspaceState.update('last_compile', file);
 		save_activefile();
 		const Terminal = get_terminal();
 		Terminal.sendText('orita compile \"' + file + '\"');
-	}));
-
-	context.subscriptions.push(vscode.commands.registerCommand('orita.run', function () {
-		const file = get_activefile(context.workspaceState.get('last_compile'));
-		if (file == undefined || get_filenamesuf(file) != '.cpp') return;
-		context.workspaceState.update('last_compile', file);
-		save_activefile();
-		const Terminal = get_terminal();
-		Terminal.show();
-		Terminal.sendText('cd \"' + get_fileaddress(file) + '\"');
-		Terminal.sendText('orita compile ' + OP('t') + ' \"' + get_fileaddress(file) + PS + get_filenamepre(file) + exe_suf + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.add-file', function () {
@@ -172,7 +155,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const Terminal = get_terminal();
 		Terminal.show();
 		if (file == undefined) Terminal.sendText('orita run');
-		else if (get_filenamesuf(file) == '.cpp') {
+		else if (source_file_suf.includes(get_filenamesuf(file))) {
 			save_activefile();
 			Terminal.sendText('orita run ' + OP('f') + ' \"' + file + '\"');
 		}
@@ -185,7 +168,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (file == undefined) return;
 		const Terminal = get_terminal();
 		Terminal.show();
-		if (get_filenamesuf(file) == '.cpp') Terminal.sendText('orita check ' + OP('if') + ' \"' + file + '\"');
+		if (source_file_suf.includes(get_filenamesuf(file))) Terminal.sendText('orita check ' + OP('if') + ' \"' + file + '\"');
 		else Terminal.sendText('orita chdata ' + OP('if') + '=\"' + file + '\"');
 	}));
 
@@ -194,7 +177,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (file == undefined) return;
 		const Terminal = get_terminal();
 		Terminal.show();
-		if (get_filenamesuf(file) == '.cpp') Terminal.sendText('orita check ' + OP('of') + ' \"' + file + '\"');
+		if (source_file_suf.includes(get_filenamesuf(file))) Terminal.sendText('orita check ' + OP('of') + ' \"' + file + '\"');
 		else Terminal.sendText('orita chdata ' + OP('of') + '=\"' + file + '\"');
 	}));
 
@@ -203,7 +186,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (file == undefined) return;
 		const Terminal = get_terminal();
 		Terminal.show();
-		if (get_filenamesuf(file) == '.cpp') Terminal.sendText('orita check ' + OP('af') + ' \"' + file + '\"');
+		if (source_file_suf.includes(get_filenamesuf(file))) Terminal.sendText('orita check ' + OP('af') + ' \"' + file + '\"');
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('orita.show-run-data', function () {
