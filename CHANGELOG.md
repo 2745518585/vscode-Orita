@@ -112,3 +112,11 @@ Require Orita version: Dev0.2.4.
 ### Features
 
 - Allow configuring the expected source file extensions in settings
+
+## v0.0.15
+
+Require Orita version: Dev0.2.2.
+
+### Fixes
+
+- Cannot find orita file path.
