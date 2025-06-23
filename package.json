@@ -2,7 +2,7 @@
     "name": "orita",
     "displayName": "Orita",
     "description": "Useful OI Tools",
-    "version": "0.0.13",
+    "version": "0.0.15",
     "publisher": "2745518585",
     "engines": {
         "vscode": "^1.75.0"
@@ -28,10 +28,6 @@
             {
                 "command": "orita.compile",
                 "title": "Orita: Compile"
-            },
-            {
-                "command": "orita.run",
-                "title": "Orita: Run"
             },
             {
                 "command": "orita.add-file",
@@ -72,10 +68,6 @@
                 "key": "ctrl+f6"
             },
             {
-                "command": "orita.run",
-                "key": "alt+f6"
-            },
-            {
                 "command": "orita.add-file",
                 "key": "f7"
             },
@@ -111,6 +103,14 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Add orita path to include path"
+                },
+                "orita.source_file_suf": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [".cpp", ".py", ".js"],
+                    "description": "Identified source files suffixes"
                 }
             }
         }
