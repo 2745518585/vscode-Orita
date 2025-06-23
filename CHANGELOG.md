@@ -115,7 +115,7 @@ Require Orita version: Dev0.2.4.
 
 ## v0.0.15
 
-Require Orita version: Dev0.2.2.
+Require Orita version: Dev0.2.4.
 
 ### Fixes
 
